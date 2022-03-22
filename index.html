@@ -1,40 +1,83 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+  <title>Apache Airflow</title>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/white.css">
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+<body>
+  <div class="reveal curve">
+    <div class="slides">
+
+      <section>
+        <p class="title">
+          Data pipelines <br>con <span class="primary">Apache Airflow</span>
+        </p>
+      </section>
+
+      <section>
+        <div class="container my-5">
+          <div class="row align-items-center">
+            <div class="col">
+              <img src="images/book.jpg" alt="Data pipelines con Apachae airflow" width="300px">
+            </div>
+            <div class="col">
+              <p><span class="primary">Julian de Ruiter</span> y <span class="primary">Bas Harenslak</span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        
+        <section>
+          <p class="title"><span class="primary">Def:</span> Data pipeline</p>
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <small>consiste en una serie de da tareas que se ejecutan de manera secuencial o paralela según sea el caso para dar como resultado datos o información procesada</small>
+              </div>
+              <div class="col">
+                <img src="images/datapipe-tree.png" alt="">
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <section>
+          <p class="title">DAG's (diagram acyclic graph)</p>
+          <p>Airflow representa los pipelines con diagramas DAG que son una representación en modelos de caja del flujo de datos acíclico</p>
+          
+        </section>
+      </section>
+    </div>
+  </div>
+
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/notes/notes.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+      hash: true,
+
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+
 </html>
