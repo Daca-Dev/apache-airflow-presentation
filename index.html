@@ -18,11 +18,16 @@
 <body>
   <div class="reveal curve">
     <div class="slides">
-
+      <!-- presentation and book -->
       <section>
         <p class="title">
-          Data pipelines <br>con <span class="primary">Apache Airflow</span>
+          Data pipelines <br>con <a href="https://airflow.apache.org/" target="blank"><span class="primary">Apache
+              Airflow</span></a>
         </p>
+        <aside class="notes">
+          Apache Airflow es un framework implementado en Python que es mantenido por Apache foundation y la comunidad,
+          lo que quiere decir que es Open source
+        </aside>
       </section>
 
       <section>
@@ -36,30 +41,210 @@
             </div>
           </div>
         </div>
+        <aside class="notes">
+          El contenido de esta sesión y futuras esta basado en el contenido del libro de Data pipelines con Apache
+          airflow de Julian de Ruiter u Bas Harenslak
+          <br><br>
+          además de la documentación de Airflow cuando sea neceario
+        </aside>
       </section>
-
+      <!-- DAG -->
       <section>
-        
+
         <section>
           <p class="title"><span class="primary">Def:</span> Data pipeline</p>
           <div class="container">
             <div class="row">
               <div class="col">
-                <small>consiste en una serie de da tareas que se ejecutan de manera secuencial o paralela según sea el caso para dar como resultado datos o información procesada</small>
+                <small>consiste en una serie de da tareas que se ejecutan de manera secuencial o paralela, dando como
+                  resultado datos o información procesada</small>
               </div>
               <div class="col">
                 <img src="images/datapipe-tree.png" alt="">
               </div>
             </div>
           </div>
+          <aside class="notes">
+            en palabras simples un data pipeline es un proceso divido en tareas las cuales reciben o no datos, según sea
+            el caso y se obtendra a la salida datos procesados o listos para consumir
+            <br><br>
+            algunos ejemplos serian
+            <ul>
+              <li>Extraer datos de una API</li>
+              <li>crear un modelo de IA/MC</li>
+              <li>limpiar o procesar datos</li>
+            </ul>
+          </aside>
         </section>
-        
+
         <section>
-          <p class="title">DAG's (diagram acyclic graph)</p>
-          <p>Airflow representa los pipelines con diagramas DAG que son una representación en modelos de caja del flujo de datos acíclico</p>
-          
+          <p class="title">DAG's</p>
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <p>DAG = diagram <span class="primary">acyclic</span> graph</p>
+                <small>Airflow representa los pipelines con diagramas DAG que son una representación en modelos de caja
+                  del flujo de datos acíclico</small>
+              </div>
+              <div class="col">
+                <img src="images/acyclic.png" alt="">
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            Los DAG son una representación de modelos de caja del flujo de datos y dependencias de un data pipeline
+            <br><br>
+            Es importante resaltar la palabra aciclica en la definición de DAG
+            <br><br>
+            Los dags son tareas finitas y secuenciales, lo que quiere decir que al haber un ciclo hará que un par de
+            tareas que dependen mutuamente de si mismas nunca se ejecuten
+          </aside>
         </section>
+
+        <section>
+          <p class="title">Caracteristicas de un DAG</p>
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <p class="fragment fade-up" data-fragment-index="1"><span class="primary">Atomicidad</span></p>
+                <img class="fragment fade-up" data-fragment-index="1" src="images/atomicidad.png" alt="">
+              </div>
+              <div class="col">
+                <p class="fragment fade-down" data-fragment-index="2"><span class="primary">Idempotencia</span></p>
+                <img class="fragment fade-down" data-fragment-index="2" src="images/idempotencia.png" alt="">
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            La atomicidad consiste en dividir una tarea a su maxima expresión por ejemplos
+            supongamos que queremos extraer datos de una API y lo realizamos por medio del comando CURL de bash, y una
+            vez tenemos los datos los estamos filtrando usando
+            el comando GREP, estamos realizando dos tareas aquí
+            <br><br>
+            adicionalmente Las tareas deben definirse para que tengan éxito y produzcan algún resultado adecuado o
+            fallen de una manera que no afecte el estado del sistema.
+          </aside>
+        </section>
+
+        <section>
+          <p class="title"><span class="primary">DAG</span> - Ciclo básico</p>
+          <img src="images/process.png" style="max-height: 11.5em;" alt="">
+        </section>
+
       </section>
+
+      <!-- AIRFLOW -->
+      <section>
+
+        <section>
+          <p class="title">Introducción a Airflow</p>
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col txt-base">
+                <small class="mb-2">Airflow esta basado en tres pilares para funcionar</small>
+                <small>
+                  <ul>
+                    <li><span class="primary">scheduler</span> es el encargado de mirar que tareas están listas para
+                      ejecutarse y las pasa a la cola de ejecución
+                    <li><span class="primary">worker</span> es el encargado de ejecutar las tareas que se encuentran en
+                      la cola de ejecución</li>
+                    <li><span class="primary">webserver</span> es un servidor web con GUI que nos permite interactuar
+                      con los DAG's y ver el feedback de cada uno de ellos</li>
+                    </li>
+                  </ul>
+                </small>
+              </div>
+              <div class="col">
+                <img src="images/basic-airflow.png" alt="">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <p>Expandiendo el funcionamiento de Airflow</p>
+          <img src="images/expand-airflow.png" alt="">
+        </section>
+
+        <section>
+          <p>DAG's en Airflow</p>
+          <img src="images/task-operator.png" alt="">
+        </section>
+
+      </section>
+
+      <!-- DAG EJEMPLO -->
+      <section>
+
+        <section>
+          <p class="title">Construyendo un DAG</p>
+          <small>
+            <pre style="width: 100%; background: #272822;">
+              <code data-trim data-noescape class="language-python" data-line-numbers="|7-9|11-15|17-21|46-50|24-43|52-56|58">
+            import json
+            import pathlib
+
+            import airflow
+            import requests
+            import requests.exceptions as requests_exceptions
+            from airflow import DAG
+            from airflow.operators.bash import BashOperator
+            from airflow.operators.python import PythonOperator
+
+            dag = DAG(
+                dag_id="download_rocket_launches",
+                start_date=airflow.utils.dates.days_ago(14),
+                schedule_interval=None,
+            )
+
+            download_launches = BashOperator(
+                task_id="download_launches",
+                bash_command="curl -o /tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",
+                dag=dag,
+            )
+
+
+            def _get_pictures():
+                # Ensure directory exists
+                pathlib.Path("/tmp/images").mkdir(parents=True, exist_ok=True)
+
+                # Download all pictures in launches.json
+                with open("/tmp/launches.json") as f:
+                    launches = json.load(f)
+                    image_urls = [launch["image"] for launch in launches["results"]]
+                    for image_url in image_urls:
+                        try:
+                            response = requests.get(image_url)
+                            image_filename = image_url.split("/")[-1]
+                            target_file = f"/tmp/images/{image_filename}"
+                            with open(target_file, "wb") as f:
+                                f.write(response.content)
+                            print(f"Downloaded {image_url} to {target_file}")
+                        except requests_exceptions.MissingSchema:
+                            print(f"{image_url} appears to be an invalid URL.")
+                        except requests_exceptions.ConnectionError:
+                            print(f"Could not connect to {image_url}.")
+
+
+            get_pictures = PythonOperator(
+                task_id="get_pictures",
+                python_callable=_get_pictures,
+                dag=dag,
+            )
+
+            notify = BashOperator(
+                task_id="notify",
+                bash_command='echo "There are now $(ls /tmp/images/ | wc -l) images."',
+                dag=dag,
+            )
+
+            download_launches >> get_pictures >> notify
+
+          </code></pre></small>
+        </section>
+
+      </section>
+
     </div>
   </div>
 
@@ -73,7 +258,6 @@
     // - https://revealjs.com/config/
     Reveal.initialize({
       hash: true,
-
       // Learn about plugins: https://revealjs.com/plugins/
       plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
     });
